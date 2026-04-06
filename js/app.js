@@ -4,6 +4,8 @@
 
 let selectedNumbers = [];
 let allNumbers = [];
+let lastReservedNumbers = [];
+let lastReservedTelefone = '';
 
 document.addEventListener('DOMContentLoaded', () => {
     loadGrid();
@@ -201,6 +203,10 @@ async function handleGerarPix(e) {
         return;
     }
 
+    // Salvar para possível cancelamento
+    lastReservedNumbers = [...selectedNumbers];
+    lastReservedTelefone = telefone;
+
     // Números reservados — gerar PIX
     const valor = selectedNumbers.length * RIFA_CONFIG.valorPorNumero;
     const txid = 'RIFA' + Date.now().toString(36).toUpperCase();
@@ -297,6 +303,203 @@ function closeModal() {
     document.getElementById('modal-error').classList.add('hidden');
 }
 
+// ── Meus Números ──
+function showMeusNumeros() {
+    document.querySelector('.main-content').classList.add('hidden');
+    document.querySelector('.hero').classList.add('hidden');
+    document.querySelector('.solidarity-banner').classList.add('hidden');
+    document.querySelector('.meus-numeros-bar').classList.add('hidden');
+    document.getElementById('selection-bar').classList.add('hidden');
+    document.getElementById('meus-numeros').classList.remove('hidden');
+    document.getElementById('meus-numeros-result').classList.add('hidden');
+    document.getElementById('form-meus-numeros').reset();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function hideMeusNumeros() {
+    document.getElementById('meus-numeros').classList.add('hidden');
+    document.querySelector('.main-content').classList.remove('hidden');
+    document.querySelector('.hero').classList.remove('hidden');
+    document.querySelector('.solidarity-banner').classList.remove('hidden');
+    document.querySelector('.meus-numeros-bar').classList.remove('hidden');
+    updateSelectionBar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function handleConsultarMeusNumeros(e) {
+    e.preventDefault();
+    const telefone = document.getElementById('meus-telefone').value.trim();
+    if (!telefone) return;
+
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Consultando...';
+
+    const { data, error } = await supabaseClient.rpc('buscar_meus_numeros', {
+        p_telefone: telefone
+    });
+
+    btn.disabled = false;
+    btn.textContent = 'Consultar';
+
+    if (error) {
+        showError('Erro ao consultar. Tente novamente.');
+        return;
+    }
+
+    const resultDiv = document.getElementById('meus-numeros-result');
+    resultDiv.classList.remove('hidden');
+
+    if (!data.total || data.total === 0) {
+        resultDiv.innerHTML = '<div class="meus-vazio">Nenhum número encontrado para este telefone.</div>';
+        return;
+    }
+
+    const numeros = data.numeros;
+    const reservados = numeros.filter(n => n.status === 'reservado');
+    const pagos = numeros.filter(n => n.status === 'pago');
+
+    let html = '';
+
+    if (reservados.length > 0) {
+        html += '<div class="meus-grupo">';
+        html += '<div class="meus-grupo-titulo pendente">⏳ Pendentes de Pagamento</div>';
+        reservados.forEach(n => {
+            const numStr = String(n.numero).padStart(2, '0');
+            const dataRes = n.reservado_em ? new Date(n.reservado_em).toLocaleDateString('pt-BR') : '';
+            html += `
+                <div class="meus-card" data-numero="${n.numero}">
+                    <div class="meus-card-info">
+                        <div class="meus-card-numero">Nº ${numStr}</div>
+                        <div class="meus-card-data">Reservado em ${dataRes}</div>
+                    </div>
+                    <div class="meus-card-actions">
+                        <button class="btn-meus-pix" onclick="meusGerarPix(${n.numero}, '${escapeHTML(n.nome || '')}')">Copiar PIX</button>
+                        <a class="btn-meus-whatsapp hidden" target="_blank" rel="noopener">📱 Enviar Comprovante</a>
+                        <button class="btn-meus-cancelar" onclick="meusCancelar([${n.numero}], '${telefone}')">Cancelar</button>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+    }
+
+    if (pagos.length > 0) {
+        html += '<div class="meus-grupo">';
+        html += '<div class="meus-grupo-titulo confirmado">✅ Pagos</div>';
+        pagos.forEach(n => {
+            const numStr = String(n.numero).padStart(2, '0');
+            const dataPago = n.pago_em ? new Date(n.pago_em).toLocaleDateString('pt-BR') : '';
+            html += `
+                <div class="meus-card">
+                    <div class="meus-card-info">
+                        <div class="meus-card-numero">Nº ${numStr}</div>
+                        <div class="meus-card-data">Pago em ${dataPago}</div>
+                    </div>
+                    <span class="meus-pago-badge">✅ Pago</span>
+                </div>
+            `;
+        });
+        html += '</div>';
+    }
+
+    resultDiv.innerHTML = html;
+}
+
+function meusGerarPix(numero, nome) {
+    const valor = RIFA_CONFIG.valorPorNumero;
+    const txid = 'RIFA' + Date.now().toString(36).toUpperCase();
+    const numStr = String(numero).padStart(2, '0');
+
+    const pixPayload = generatePixPayload(
+        RIFA_CONFIG.pixChave,
+        RIFA_CONFIG.pixNome,
+        RIFA_CONFIG.pixCidade,
+        valor,
+        txid
+    );
+
+    const card = document.querySelector(`.meus-card[data-numero="${numero}"]`);
+    const btn = card.querySelector('.btn-meus-pix');
+    const whatsBtn = card.querySelector('.btn-meus-whatsapp');
+
+    // Montar link do WhatsApp
+    const whatsMsg = encodeURIComponent(
+        `Olá, meu nome é ${nome}, escolhi o número ${numStr} e fiz o pagamento no valor de R$ ${valor.toFixed(2)}. Segue o comprovante.`
+    );
+    whatsBtn.href = `https://wa.me/${RIFA_CONFIG.whatsappNumero}?text=${whatsMsg}`;
+    whatsBtn.classList.remove('hidden');
+
+    // Copiar o PIX
+    navigator.clipboard.writeText(pixPayload).then(() => {
+        btn.textContent = '✅ Copiado!';
+        btn.style.background = 'var(--green-light)';
+        btn.style.color = 'var(--green-dark)';
+        setTimeout(() => {
+            btn.textContent = 'Copiar PIX';
+            btn.style.background = '';
+            btn.style.color = '';
+        }, 2500);
+    }).catch(() => {
+        prompt('Copie o código PIX abaixo:', pixPayload);
+    });
+}
+
+async function meusCancelar(numeros, telefone) {
+    if (!confirm(`Tem certeza que deseja cancelar a reserva do número ${numeros.map(n => String(n).padStart(2, '0')).join(', ')}?`)) {
+        return;
+    }
+
+    const { data, error } = await supabaseClient.rpc('cancelar_reserva_comprador', {
+        p_numeros: numeros,
+        p_telefone: telefone
+    });
+
+    if (error || !data.success) {
+        showError(data?.message || 'Erro ao cancelar. Tente novamente.');
+        return;
+    }
+
+    // Re-consultar
+    loadGrid();
+    document.getElementById('form-meus-numeros').dispatchEvent(new Event('submit'));
+}
+
+// ── Cancelar Reserva (pós-checkout) ──
+async function handleCancelarReservaCheckout() {
+    if (lastReservedNumbers.length === 0 || !lastReservedTelefone) {
+        showError('Nenhuma reserva para cancelar.');
+        return;
+    }
+
+    const numerosStr = lastReservedNumbers.map(n => String(n).padStart(2, '0')).join(', ');
+    if (!confirm(`Cancelar a reserva dos números ${numerosStr}?`)) {
+        return;
+    }
+
+    const btn = document.getElementById('btn-cancelar-reserva');
+    btn.disabled = true;
+    btn.textContent = 'Cancelando...';
+
+    const { data, error } = await supabaseClient.rpc('cancelar_reserva_comprador', {
+        p_numeros: lastReservedNumbers,
+        p_telefone: lastReservedTelefone
+    });
+
+    btn.disabled = false;
+    btn.textContent = '✕ Cancelar Reserva';
+
+    if (error || !data.success) {
+        showError(data?.message || 'Erro ao cancelar. Tente novamente.');
+        return;
+    }
+
+    lastReservedNumbers = [];
+    lastReservedTelefone = '';
+    loadGrid();
+    hideCheckout();
+}
+
 // ── Event Listeners ──
 function setupEventListeners() {
     document.getElementById('btn-finalizar').addEventListener('click', showCheckout);
@@ -304,6 +507,15 @@ function setupEventListeners() {
     document.getElementById('form-checkout').addEventListener('submit', handleGerarPix);
     document.getElementById('btn-copiar').addEventListener('click', copiarPix);
     document.getElementById('telefone').addEventListener('input', mascaraTelefone);
+
+    // Meus Números
+    document.getElementById('btn-meus-numeros').addEventListener('click', showMeusNumeros);
+    document.getElementById('btn-voltar-meus').addEventListener('click', hideMeusNumeros);
+    document.getElementById('form-meus-numeros').addEventListener('submit', handleConsultarMeusNumeros);
+    document.getElementById('meus-telefone').addEventListener('input', mascaraTelefone);
+
+    // Cancelar reserva no pós-checkout
+    document.getElementById('btn-cancelar-reserva').addEventListener('click', handleCancelarReservaCheckout);
 
     // Fechar modal ao clicar fora
     document.getElementById('modal-error').addEventListener('click', (e) => {

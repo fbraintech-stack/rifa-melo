@@ -41,6 +41,237 @@ body {
 
 .hidden { display: none !important; }
 
+/* ── Banner Solidário ── */
+.solidarity-banner {
+    background: linear-gradient(135deg, #b91c1c 0%, #dc2626 50%, #ef4444 100%);
+    padding: 16px 20px;
+    text-align: center;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 16px rgba(185, 28, 28, 0.4);
+}
+
+.solidarity-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.solidarity-text {
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--white);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.solidarity-sub {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 4px;
+    font-style: italic;
+}
+
+/* ── Botão Meus Números ── */
+.meus-numeros-bar {
+    display: flex;
+    justify-content: center;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.btn-meus-numeros {
+    padding: 10px 24px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--white);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.btn-meus-numeros:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* ── Tela Meus Números ── */
+.meus-numeros-screen {
+    min-height: 100vh;
+    padding: 20px 16px 40px;
+}
+
+.meus-numeros-content {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.meus-numeros-content h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.meus-numeros-desc {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+
+/* Resultado da consulta */
+.meus-grupo {
+    margin-top: 20px;
+}
+
+.meus-grupo-titulo {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.meus-grupo-titulo.pendente { color: var(--amber); }
+.meus-grupo-titulo.confirmado { color: var(--green-light); }
+
+.meus-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.meus-card-info {
+    flex: 1;
+}
+
+.meus-card-numero {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.meus-card-data {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 2px;
+}
+
+.meus-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.meus-card-actions button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.btn-meus-pix {
+    background: var(--green-medium);
+    color: var(--white);
+}
+
+.btn-meus-pix:hover { background: #009e4a; }
+
+.btn-meus-cancelar {
+    background: transparent;
+    border: 1px solid var(--red-star) !important;
+    color: var(--red-star);
+}
+
+.btn-meus-cancelar:hover {
+    background: var(--red-star);
+    color: var(--white);
+}
+
+.btn-meus-whatsapp {
+    padding: 8px 14px;
+    background: #25D366;
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.btn-meus-whatsapp:hover { background: #1fb855; }
+
+.meus-pago-badge {
+    padding: 6px 14px;
+    background: rgba(120, 190, 32, 0.15);
+    border: 1px solid rgba(120, 190, 32, 0.3);
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green-light);
+}
+
+.meus-vazio {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+/* Pix Modal dentro de Meus Números */
+.meus-pix-modal {
+    margin-top: 16px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 16px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* ── Botão Cancelar Reserva (pós-checkout) ── */
+.btn-cancelar-reserva {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    border: 1px solid rgba(228, 0, 43, 0.5);
+    color: var(--red-star);
+    text-align: center;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.btn-cancelar-reserva:hover {
+    background: var(--red-star);
+    color: var(--white);
+    border-color: var(--red-star);
+}
+
 /* ── Hero / Header ── */
 .hero {
     background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 100%);
@@ -178,7 +409,11 @@ body {
 .cell-name {
     font-size: 8px;
     font-weight: 600;
-    margin-top: 1px;
+    position: absolute;
+    bottom: 3px;
+    left: 0;
+    right: 0;
+    text-align: center;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -191,11 +426,13 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 40px;
-    font-weight: 300;
-    opacity: 0.3;
+    font-size: 38px;
+    font-weight: 700;
+    opacity: 0.5;
     line-height: 1;
     pointer-events: none;
+    color: rgba(255, 255, 255, 0.9);
+    z-index: 2;
 }
 
 /* Status: Loading Skeleton */
@@ -261,6 +498,17 @@ body {
     background: var(--red-star);
     color: var(--white);
     opacity: 0.9;
+    justify-content: center;
+}
+
+.cell.pago .cell-number {
+    opacity: 0.4;
+    font-size: 11px;
+    position: absolute;
+    top: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
 }
 
 /* ── Barra de Seleção (fixa embaixo) ── */

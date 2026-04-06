@@ -3,14 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rifa — Barril Heineken 5L</title>
-    <meta name="description" content="Rifa de 1 Barril de Cerveja Premium Heineken 5 Litros. Apenas R$ 10,00 por número!">
+    <title>Rifa Solidária — Vamos ajudar o Melo</title>
+    <meta name="description" content="Rifa solidária em prol do nosso amigo Melo. Barril Heineken 5L — apenas R$ 10,00 por número!">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍺</text></svg>">
 </head>
 <body>
+
+    <!-- ── Banner Solidário ── -->
+    <div class="solidarity-banner">
+        <span class="solidarity-icon">🤝</span>
+        <p class="solidarity-text">Rifa solidária: vamos ajudar o Melo</p>
+        <p class="solidarity-sub">Cada número é um gesto de amizade e força</p>
+    </div>
+
+    <!-- ── Botão Meus Números ── -->
+    <div class="meus-numeros-bar">
+        <button id="btn-meus-numeros" class="btn-meus-numeros">📋 Meus Números</button>
+    </div>
+
+    <!-- ── Tela Meus Números ── -->
+    <div id="meus-numeros" class="meus-numeros-screen hidden">
+        <div class="meus-numeros-content">
+            <button id="btn-voltar-meus" class="btn-voltar">← Voltar</button>
+            <h2>📋 Meus Números</h2>
+            <p class="meus-numeros-desc">Digite seu telefone para ver seus números</p>
+
+            <form id="form-meus-numeros">
+                <div class="form-group">
+                    <label for="meus-telefone">Telefone (WhatsApp)</label>
+                    <input type="tel" id="meus-telefone" required placeholder="(00) 00000-0000"
+                           autocomplete="tel" minlength="14" maxlength="15">
+                </div>
+                <button type="submit" class="btn-gerar-pix">Consultar</button>
+            </form>
+
+            <div id="meus-numeros-result" class="hidden">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- ── Hero / Cabeçalho com Prêmio ── -->
     <header class="hero">
@@ -105,6 +139,11 @@
                 <a id="btn-comprovante" class="btn-comprovante" target="_blank" rel="noopener">
                     📱 Enviar Comprovante via WhatsApp
                 </a>
+
+                <!-- Botão Cancelar Reserva -->
+                <button type="button" id="btn-cancelar-reserva" class="btn-cancelar-reserva">
+                    ✕ Cancelar Reserva
+                </button>
             </div>
         </div>
     </div>

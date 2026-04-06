@@ -144,6 +144,67 @@ CREATE POLICY "Leitura pública"
 -- SEM policy de UPDATE/INSERT/DELETE
 -- Toda alteração passa pelas funções RPC (SECURITY DEFINER)
 
+-- Cancelar reserva pelo comprador (valida telefone)
+CREATE OR REPLACE FUNCTION cancelar_reserva_comprador(
+    p_numeros INT[],
+    p_telefone TEXT
+) RETURNS JSON
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+    v_cancelados INT;
+BEGIN
+    UPDATE rifa_numeros
+    SET status = 'disponivel',
+        nome = NULL,
+        telefone = NULL,
+        reservado_em = NULL,
+        pago_em = NULL
+    WHERE numero = ANY(p_numeros)
+    AND status = 'reservado'
+    AND telefone = p_telefone;
+
+    GET DIAGNOSTICS v_cancelados = ROW_COUNT;
+
+    IF v_cancelados = 0 THEN
+        RETURN json_build_object('success', false, 'message', 'Nenhuma reserva encontrada para cancelar');
+    END IF;
+
+    RETURN json_build_object('success', true, 'cancelados', v_cancelados);
+END;
+$$;
+
+-- Buscar números do comprador por telefone
+CREATE OR REPLACE FUNCTION buscar_meus_numeros(p_telefone TEXT)
+RETURNS JSON
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+    v_result JSON;
+BEGIN
+    SELECT json_agg(
+        json_build_object(
+            'numero', numero,
+            'status', status,
+            'nome', nome,
+            'reservado_em', reservado_em,
+            'pago_em', pago_em
+        ) ORDER BY numero
+    ) INTO v_result
+    FROM rifa_numeros
+    WHERE telefone = p_telefone
+    AND status IN ('reservado', 'pago');
+
+    IF v_result IS NULL THEN
+        RETURN json_build_object('success', true, 'numeros', '[]'::json, 'total', 0);
+    END IF;
+
+    RETURN json_build_object('success', true, 'numeros', v_result, 'total', json_array_length(v_result));
+END;
+$$;
+
 -- ======================================
 -- IMPORTANTE: Após executar este SQL, vá em:
 -- Database > Replication > Selecione "rifa_numeros"
