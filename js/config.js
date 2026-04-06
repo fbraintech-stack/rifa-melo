@@ -11,7 +11,7 @@ const RIFA_CONFIG = {
     totalNumeros: 100,
     valorPorNumero: 10.00,
     maxPorCompra: 10,
-    pixChave: '12983001971',
+    pixChave: '+5512983001971',
     pixNome: 'BRUNA RAFAELE G COSTA',
     pixCidade: 'SAO JOSE CAMPOS',
     whatsappNumero: '5512983001971',
