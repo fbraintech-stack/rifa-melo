@@ -7,22 +7,77 @@
     <meta name="description" content="Rifa solidária em prol do nosso amigo Melo. Barril Heineken 5L — apenas R$ 10,00 por número!">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍺</text></svg>">
 </head>
 <body>
 
     <!-- ── Banner Solidário ── -->
     <div class="solidarity-banner">
-        <span class="solidarity-icon">🤝</span>
-        <p class="solidarity-text">Rifa solidária: vamos ajudar o Melo</p>
-        <p class="solidarity-sub">Cada número é um gesto de amizade e força</p>
+        <div class="solidarity-inner">
+            <svg class="solidarity-icon-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradiente principal: vermelho Heineken com profundidade 3D -->
+                    <radialGradient id="hkHeartBase" cx="40%" cy="35%" r="65%">
+                        <stop offset="0%" stop-color="#FF1744"/>
+                        <stop offset="45%" stop-color="#E4002B"/>
+                        <stop offset="100%" stop-color="#9B0019"/>
+                    </radialGradient>
+                    <!-- Brilho especular superior esquerdo -->
+                    <radialGradient id="hkHeartHighlight" cx="30%" cy="28%" r="35%">
+                        <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+                        <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+                    </radialGradient>
+                    <!-- Brilho especular secundário (lóbulo direito) -->
+                    <radialGradient id="hkHeartHighlight2" cx="65%" cy="30%" r="20%">
+                        <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.25"/>
+                        <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+                    </radialGradient>
+                    <!-- Sombra interna inferior -->
+                    <linearGradient id="hkHeartShadow" x1="50%" y1="60%" x2="50%" y2="100%">
+                        <stop offset="0%" stop-color="#000000" stop-opacity="0"/>
+                        <stop offset="100%" stop-color="#000000" stop-opacity="0.25"/>
+                    </linearGradient>
+                    <!-- Borda gradiente (branco para gold sutil) -->
+                    <linearGradient id="hkHeartStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#FFFFFF"/>
+                        <stop offset="50%" stop-color="#F0F0F0"/>
+                        <stop offset="100%" stop-color="#DDDDDD"/>
+                    </linearGradient>
+                </defs>
+                <!-- Sombra atrás do coração -->
+                <path d="M32 56l-2.9-2.64C12.8 38.02 4 30.12 4 20.4 4 12.52 10.52 6 18.4 6c4.44 0 8.7 2.08 11.32 5.32L32 14.04l2.28-2.72C36.9 8.08 41.16 6 45.6 6 53.48 6 60 12.52 60 20.4c0 9.72-8.8 17.62-25.1 32.96L32 56z"
+                      fill="black" opacity="0.15" transform="translate(0, 2)"/>
+                <!-- Camada base: borda branca externa -->
+                <path d="M32 56l-2.9-2.64C12.8 38.02 4 30.12 4 20.4 4 12.52 10.52 6 18.4 6c4.44 0 8.7 2.08 11.32 5.32L32 14.04l2.28-2.72C36.9 8.08 41.16 6 45.6 6 53.48 6 60 12.52 60 20.4c0 9.72-8.8 17.62-25.1 32.96L32 56z"
+                      fill="url(#hkHeartBase)" stroke="url(#hkHeartStroke)" stroke-width="2.5" stroke-linejoin="round"/>
+                <!-- Sombra interna inferior -->
+                <path d="M32 56l-2.9-2.64C12.8 38.02 4 30.12 4 20.4 4 12.52 10.52 6 18.4 6c4.44 0 8.7 2.08 11.32 5.32L32 14.04l2.28-2.72C36.9 8.08 41.16 6 45.6 6 53.48 6 60 12.52 60 20.4c0 9.72-8.8 17.62-25.1 32.96L32 56z"
+                      fill="url(#hkHeartShadow)"/>
+                <!-- Brilho especular principal -->
+                <path d="M32 56l-2.9-2.64C12.8 38.02 4 30.12 4 20.4 4 12.52 10.52 6 18.4 6c4.44 0 8.7 2.08 11.32 5.32L32 14.04l2.28-2.72C36.9 8.08 41.16 6 45.6 6 53.48 6 60 12.52 60 20.4c0 9.72-8.8 17.62-25.1 32.96L32 56z"
+                      fill="url(#hkHeartHighlight)"/>
+                <!-- Brilho especular secundário -->
+                <path d="M32 56l-2.9-2.64C12.8 38.02 4 30.12 4 20.4 4 12.52 10.52 6 18.4 6c4.44 0 8.7 2.08 11.32 5.32L32 14.04l2.28-2.72C36.9 8.08 41.16 6 45.6 6 53.48 6 60 12.52 60 20.4c0 9.72-8.8 17.62-25.1 32.96L32 56z"
+                      fill="url(#hkHeartHighlight2)"/>
+            </svg>
+            <div>
+                <p class="solidarity-text">Rifa solidária</p>
+                <p class="solidarity-sub">Vamos ajudar o Melo</p>
+                <span class="solidarity-divider">•</span>
+                <p class="solidarity-motto">Cada número é um gesto de amizade e força</p>
+            </div>
+        </div>
     </div>
 
-    <!-- ── Botão Meus Números ── -->
-    <div class="meus-numeros-bar">
-        <button id="btn-meus-numeros" class="btn-meus-numeros">📋 Meus Números</button>
-    </div>
+    <!-- ── Nav Bar (Meus Números) ── -->
+    <nav class="top-nav">
+        <button id="btn-meus-numeros" class="btn-meus-numeros">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Meus Números
+        </button>
+    </nav>
 
     <!-- ── Tela Meus Números ── -->
     <div id="meus-numeros" class="meus-numeros-screen hidden">
@@ -60,6 +115,18 @@
 
     <!-- ── Conteúdo Principal ── -->
     <div class="main-content">
+
+        <!-- Barra de Progresso -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <span class="progress-label">Números vendidos</span>
+                <span id="progress-text" class="progress-value">0 / 100</span>
+            </div>
+            <div class="progress-track">
+                <div id="progress-bar" class="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
         <div class="grid-header">
             <h3>Escolha seus números da sorte</h3>
             <div class="legenda">
