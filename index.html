@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rifa — Barril Heineken 5L</title>
+    <meta name="description" content="Rifa de 1 Barril de Cerveja Premium Heineken 5 Litros. Apenas R$ 10,00 por número!">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍺</text></svg>">
+</head>
+<body>
+
+    <!-- ── Hero / Cabeçalho com Prêmio ── -->
+    <header class="hero">
+        <div class="hero-content">
+            <img src="img/heineken-barril.png" alt="Barril Heineken 5 Litros" class="hero-img">
+            <div class="hero-text">
+                <h1>🎉 RIFA</h1>
+                <h2>1 Barril de Cerveja Premium<br>Heineken 5 Litros</h2>
+                <span class="price-tag">R$ 10,00 por número</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── Conteúdo Principal ── -->
+    <div class="main-content">
+        <div class="grid-header">
+            <h3>Escolha seus números da sorte</h3>
+            <div class="legenda">
+                <span class="legenda-item disponivel">Disponível</span>
+                <span class="legenda-item reservado">Reservado</span>
+                <span class="legenda-item pago">Vendido</span>
+            </div>
+        </div>
+
+        <!-- Grid 100 números -->
+        <div id="grid" class="grid">
+            <!-- Preenchido via JavaScript -->
+        </div>
+    </div>
+
+    <!-- ── Barra de Seleção (fixa embaixo) ── -->
+    <div id="selection-bar" class="selection-bar hidden">
+        <div class="selection-info">
+            <span id="selected-numbers"></span>
+            <span id="selected-count"></span>
+            <span id="selected-total"></span>
+        </div>
+        <button id="btn-finalizar" class="btn-finalizar">Finalizar Escolha</button>
+    </div>
+
+    <!-- ── Tela de Checkout ── -->
+    <div id="checkout" class="checkout hidden">
+        <div class="checkout-content">
+            <button id="btn-voltar" class="btn-voltar">← Voltar aos números</button>
+            <h2>Finalizar Compra</h2>
+
+            <!-- Resumo da seleção -->
+            <div id="checkout-resumo" class="checkout-resumo"></div>
+
+            <!-- Formulário: nome e telefone -->
+            <form id="form-checkout">
+                <div class="form-group">
+                    <label for="nome">Nome completo</label>
+                    <input type="text" id="nome" required placeholder="Seu nome completo"
+                           autocomplete="name" minlength="3">
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone (WhatsApp)</label>
+                    <input type="tel" id="telefone" required placeholder="(00) 00000-0000"
+                           autocomplete="tel" minlength="14" maxlength="15">
+                </div>
+                <button type="submit" id="btn-gerar-pix" class="btn-gerar-pix">
+                    Gerar PIX
+                </button>
+            </form>
+
+            <!-- Resultado: PIX gerado -->
+            <div id="pix-result" class="pix-result hidden">
+                <div class="pix-success">
+                    ✅ Números reservados com sucesso!
+                </div>
+
+                <div class="pix-info">
+                    <p><strong>Recebedor:</strong> Bruna Rafaele Gomes da Costa</p>
+                    <p><strong>Chave PIX:</strong> 12983001971 (Telefone)</p>
+                    <p><strong>Valor:</strong> R$ <span id="pix-valor"></span></p>
+                </div>
+
+                <!-- QR Code -->
+                <div id="qrcode" class="qrcode"></div>
+
+                <!-- Código Copia e Cola -->
+                <div class="pix-copiar">
+                    <p>PIX Copia e Cola:</p>
+                    <div class="pix-code-container">
+                        <input type="text" id="pix-code" readonly>
+                        <button type="button" id="btn-copiar" class="btn-copiar">Copiar</button>
+                    </div>
+                </div>
+
+                <!-- Botão WhatsApp -->
+                <a id="btn-comprovante" class="btn-comprovante" target="_blank" rel="noopener">
+                    📱 Enviar Comprovante via WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Modal de Erro ── -->
+    <div id="modal-error" class="modal hidden">
+        <div class="modal-content">
+            <p id="modal-error-msg"></p>
+            <button onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <!-- ── Scripts ── -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/pix.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

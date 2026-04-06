@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa Heineken — Painel Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+</head>
+<body class="admin-body">
+
+    <!-- ── Tela de Login ── -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-card">
+            <h1>🔒 Painel Admin</h1>
+            <h2>Rifa Heineken</h2>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-user">Usuário</label>
+                    <input type="text" id="admin-user" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="admin-pass">Senha</label>
+                    <input type="password" id="admin-pass" required autocomplete="current-password">
+                </div>
+                <p id="login-error" class="error-msg"></p>
+                <button type="submit" class="btn-login">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ── Dashboard Admin ── -->
+    <div id="admin-dashboard" class="admin-dashboard hidden">
+
+        <!-- Header -->
+        <header class="admin-header">
+            <h1>🍺 Rifa Heineken — Admin</h1>
+            <button onclick="logout()" class="btn-logout">Sair</button>
+        </header>
+
+        <!-- Estatísticas -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <span class="stat-value" id="stat-disponiveis">-</span>
+                <span class="stat-label">Disponíveis</span>
+            </div>
+            <div class="stat-card reservado">
+                <span class="stat-value" id="stat-reservados">-</span>
+                <span class="stat-label">Reservados</span>
+            </div>
+            <div class="stat-card pago">
+                <span class="stat-value" id="stat-pagos">-</span>
+                <span class="stat-label">Pagos</span>
+            </div>
+            <div class="stat-card money">
+                <span class="stat-value" id="stat-arrecadado">-</span>
+                <span class="stat-label">Arrecadado</span>
+            </div>
+            <div class="stat-card pending">
+                <span class="stat-value" id="stat-pendente">-</span>
+                <span class="stat-label">Pendente</span>
+            </div>
+        </div>
+
+        <!-- Grid Visão Geral -->
+        <section class="admin-section">
+            <h2>Visão Geral dos Números</h2>
+            <div class="legenda" style="margin-bottom: 12px;">
+                <span class="legenda-item disponivel">Disponível</span>
+                <span class="legenda-item reservado">Reservado</span>
+                <span class="legenda-item pago">Pago</span>
+            </div>
+            <div id="admin-grid" class="grid"></div>
+        </section>
+
+        <!-- Lista de Reservas -->
+        <section class="admin-section">
+            <h2>Reservas e Pagamentos</h2>
+            <div id="reservations-list" class="reservations-list">
+                <p class="no-reservations">Carregando...</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- ── Scripts ── -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
