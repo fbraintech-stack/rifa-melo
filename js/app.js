@@ -324,7 +324,7 @@ function showMeusNumeros() {
     document.querySelector('.main-content').classList.add('hidden');
     document.querySelector('.hero').classList.add('hidden');
     document.querySelector('.solidarity-banner').classList.add('hidden');
-    document.querySelector('.top-nav').classList.add('hidden');
+    document.querySelector('.hero').classList.add('hidden');
     document.getElementById('selection-bar').classList.add('hidden');
     document.getElementById('meus-numeros').classList.remove('hidden');
     document.getElementById('meus-numeros-result').classList.add('hidden');
@@ -337,7 +337,7 @@ function hideMeusNumeros() {
     document.querySelector('.main-content').classList.remove('hidden');
     document.querySelector('.hero').classList.remove('hidden');
     document.querySelector('.solidarity-banner').classList.remove('hidden');
-    document.querySelector('.top-nav').classList.remove('hidden');
+    document.querySelector('.hero').classList.remove('hidden');
     updateSelectionBar();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }

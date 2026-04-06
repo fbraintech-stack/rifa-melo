@@ -127,22 +127,16 @@ body {
     }
 }
 
-/* ── Nav Bar ── */
-.top-nav {
-    display: flex;
-    justify-content: flex-end;
-    padding: 8px 16px;
-    background: rgba(0, 0, 0, 0.15);
-}
-
+/* ── Botão Meus Números (no hero) ── */
 .btn-meus-numeros {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
+    gap: 7px;
+    margin-top: 16px;
+    padding: 10px 22px;
     background: var(--glass);
     border: 1px solid var(--glass-border);
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.75);
     border-radius: 50px;
     font-size: 13px;
     font-weight: 500;
@@ -153,8 +147,8 @@ body {
 }
 
 .btn-meus-numeros svg {
-    opacity: 0.7;
-    transition: opacity var(--transition);
+    opacity: 0.6;
+    transition: all var(--transition);
 }
 
 .btn-meus-numeros:hover {
