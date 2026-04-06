@@ -15,7 +15,7 @@ const RIFA_CONFIG = {
     pixNome: 'BRUNA RAFAELE G COSTA',
     pixCidade: 'SAO JOSE CAMPOS',
     whatsappNumero: '5512983001971',
-    premio: '1 Barril de Cerveja Premium Heineken 5 Litros'
+    premio: '1 Barril Heineken 5L + 1 Peça de Picanha (ou R$ 200,00 no PIX)'
 };
 
 // Credenciais do admin (hash SHA-256 de "usuario:senha")
